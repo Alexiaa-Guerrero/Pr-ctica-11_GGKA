@@ -21,7 +21,7 @@ void llenar(arr[10][100])
       arr[i][num2] = 1;
     }
   }
-
+}
 
 void mensual(aparmen[10])
 {
@@ -35,11 +35,16 @@ void mensual(aparmen[10])
 }
 
 
-void comp
-
-
-
-
-
+void comp_men(int arr[10][100], int men[10], int total[100])
+{
+    int i, j;
+    for(i = 0; i < 10; i++)
+    {
+      for(j = 0; j < 100; j++)
+      {
+        total[j] = arr[i][j] * men[i];
+      }
+    }
+}
 
     
