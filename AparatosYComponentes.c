@@ -4,47 +4,106 @@ Programa  que registra aparatos y sus componentes*/
 
 #include <stdio.h>
 #include <stdlib.h>
+#define a 10
+#define b 100
 
-void llenar(arr[10][100])
+void read_comp(int arr[a][b])
 {
-  int i, j, num2
+    int i,j;
+    int total, comp;
 
-  for(i = 0; i < 10; i++)
-  {
-    printf("Dame la cantidad: ");
-    scanf("%d", &num);
+    //Inicializacion de la matriz
+    for(i = 0; i < a; i++)
+        for(j = 0; j < b; j++)
+            arr[i][j] = 0;
+    printf("La matriz se inicializo\n");
 
-    for(j = 0; j < num; j++)
+    //Lectura de datos
+    printf("Introducir el numero de componentes por aparato.\n");
+    for(i = 0; i < a; i++)
     {
-      printf("Dame el número de componente (0-99): ");
-      scanf("%d", &num2);
-      arr[i][num2] = 1;
+        printf("Total de componentes del aparato %d: ", i+1);
+        scanf("%d", &total);
+        for(j = 0; j < total; j++)
+        {
+            printf("Posición del componente %d: ", j+1);
+            scanf("%d", &comp);
+            arr[i][comp] = 1;
+        }
     }
-  }
 }
 
-void mensual(aparmen[10])
+void read_month(int arr[a][b], int arr2[])
 {
-  int i;
+    int i, j, temp;
 
-  for(i = 0; i < 10; i++)
-  {
-    printf("Número de aparatos mensuales de %d: ", i);
-    scanf("%d", &aparmen[i]);
-  }
+    printf("Introducir el numero de aparatos fabricados mensualmente.\n");
+    //Lectura de datos mensuales
+    for(i = 0; i < a; i++)
+    {
+        temp  = 0;
+        for(j = 0; j < b; j++)
+        {
+            temp = temp + arr[i][j];
+        }
+        if (temp != 0)
+        {
+            printf("Aparato %d: ", i+1);
+            scanf("%d", &arr2[i]);
+        }
+    }
 }
 
-
-void comp_men(int arr[10][100], int men[10], int total[100])
+void total_month(int arr[a][b], int month[], int total[])
 {
     int i, j;
-    for(i = 0; i < 10; i++)
+    //Inicializacion del arreglo
+    for(i = 0; i < b; i++)
     {
-      for(j = 0; j < 100; j++)
-      {
-        total[j] = arr[i][j] * men[i];
-      }
+        total[i] = 0;
+    }
+
+    //Calculo de los componentes mensuales
+    printf("Numero de unidades de cada componente utilizados mensualmente.\n");
+    for(i = 0; i < b; i++)
+    {
+        for(j = 0; j < a; j++)
+        {
+            total[i] = total[i] + (arr[j][i] * month[j]);
+        }
+        if(total[i] != 0)
+        {
+            printf("Componente %d: %d\n", i, total[i]);
+        }
+        
     }
 }
 
-    
+void max_comp(int total[])
+{
+    int i, comp, max = 0;
+    for(i = 0; i < 100; i++)
+    {
+        if(max < total[i])
+        {
+            max = total[i];
+            comp = i;
+        }
+    }
+    printf("El componente electronico %d es el mas utilizado, se necesitan %d unidades.", comp, max);
+}   
+
+int main (int argc, char *argv )
+{
+    int arr[a][b];
+    int month[a], total[b];
+
+    read_comp(arr);
+    printf("\n\n");
+    read_month(arr, month);
+    printf("\n\n");
+    total_month(arr, month, total);
+    printf("\n\n");
+    max_comp(total);
+    return 0;
+}
